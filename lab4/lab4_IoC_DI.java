@@ -1,62 +1,58 @@
 package com.company;
 
-interface IAttack{
-    String setAttack();
+interface IWeapon{
+    String weaponType();
 }
 
-class Warrior{
+interface Character{
+    String equip();
+}
 
-    IAttack iAttack;
+class Warrior implements Character{
 
-    void setAttack(IAttack iAttack){
-        this.iAttack=iAttack;
+    private IWeapon iWeapon;
+
+    public Warrior(IWeapon iWeapon){
+        System.out.println("Воин выбирает оружие.");
+        this.iWeapon=iWeapon;
     }
 
-    String attack(){
-
-        return iAttack.setAttack();
+    public String equip(){
+        System.out.print("Воин взял ");
+        return iWeapon.weaponType();
     }
 }
 
-class WarriorLogic {
-    int enemyArmour;
-    Warrior warrior;
+class CharacterEquip {
 
-    WarriorLogic(int enemyArmour, Warrior warrior){
-        this.enemyArmour=enemyArmour;
-        this.warrior=warrior;
-    }
-    void chooseAttackType(){
+    public static Character warriorEquip(int enemyArmour){
         if(enemyArmour>10){
-            StrongAttack s1=new StrongAttack();
-            warrior.setAttack(s1);
+            System.out.print("Бронированный противник. ");
+            return new Warrior(new Sword());
         }
         else {
-            FastAttack f1=new FastAttack();
-            warrior.setAttack(f1);
+            System.out.print("Противник в слабой броне. ");
+            return new Warrior(new Hammer());
         }
     }
 }
 
-class FastAttack implements  IAttack{
-    public String setAttack(){
-        return "Быстрая атака!";
+class Sword implements  IWeapon{
+    public String weaponType(){
+        return "меч!";
     }
 }
 
-class StrongAttack implements  IAttack{
-    public String setAttack(){
-        return "Сильная атака!";
+class Hammer implements  IWeapon{
+    public String weaponType(){
+        return "молот!";
     }
 }
 
 public class Main {
 
    public static void main(String[] args) {
-
-       Warrior w1=new Warrior();
-       WarriorLogic logic=new WarriorLogic(11,w1);
-       logic.chooseAttackType();
-       System.out.println(w1.attack());
+       Character w1 = CharacterEquip.warriorEquip(9);
+       System.out.println(w1.equip());
     }
 }
