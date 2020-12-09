@@ -79,7 +79,10 @@ class Weapon{
     Blade blade;
 
     String getWeapon(){
-        return "Сделанное оружие:" + " эфес "+ hilt.getType()+", клинок "+blade.getType();
+        if(hilt.getType().equals("закрытый")&&blade.getType().equals("изогнутый"))
+            name="Сабля";
+        else name="Прямой меч";
+        return "Сделанное оружие: " +name+ " (эфес "+ hilt.getType()+", клинок "+blade.getType()+")";
     }
 
     public static class Builder{
